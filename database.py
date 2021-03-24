@@ -14,6 +14,22 @@ def close_db():
         DB_CONN.close()
 
 
-def drop_table(name):
-    drop_str = "DROP TABLE " + name
-    DB_CONN.execute(drop_str)
+def drop_table(table):
+    sql_str = "DROP TABLE IF EXISTS " + table
+    DB_CONN.execute(sql_str)
+
+
+def create_table(table, header_cols):
+    # Generate sql string for create table
+    sql_str = "CREATE TABLE " + table
+    sql_str += " (Id INTEGER PRIMARY KEY AUTOINCREMENT,"
+    DB_CONN.execute(sql_str + header_cols + ")")
+
+
+def insert_row(row_str):
+    cur = DB_CONN.cursor()
+    cur.execute(row_str)
+    DB_CONN.commit()
+
+def get_symbols(fromTicker = "", number = 50):
+    return True

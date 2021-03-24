@@ -5,7 +5,6 @@ import database
 app = Flask(__name__, template_folder="flask_template")
 
 
-
 @app.route("/")
 def home():
     return render_template("home.html")
