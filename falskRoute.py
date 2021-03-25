@@ -16,5 +16,10 @@ def home():
     return render_template("home.html", header=header, records=records)
 
 
+@app.route("/<symbol>")
+def company(symbol):
+    return render_template("company.html", symbol=symbol)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
