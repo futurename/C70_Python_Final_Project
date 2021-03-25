@@ -20,11 +20,15 @@
 </div>
 
 
-<table id="tickersDiv" class="col-12 mx-auto table table-hover my-4">
+<table id="tickersDiv" class="mx-auto table table-hover my-4 container">
     <thead>
-    <tr>
+    <tr class="text-center bg-info text-white font-weight-bolder">
         {% for col in header %}
-            <th scope="col" class="text-center">{{ col }}</th>
+            {% if loop.index==3 or loop.index==10 %}
+                <th  class="text-center col-2">{{ col }}</th>
+            {% else %}
+                <th  class="text-center">{{ col }}</th>
+            {% endif %}
         {% endfor %}
     </tr>
     </thead>
@@ -32,9 +36,32 @@
     {% for record in records %}
         <tr class="text-center dataRow" data-href="{{ record[1] }}">
             {% for col in record %}
-                <td class="align-middle">{{ col }}</td>
+                {% if loop.index==3 or loop.index==10 %}
+                    <td class="align-middle col-2">
+                        {{ col }}
+                    </td>
+                {% else %}
+                    <td class="align-middle">
+                        {% if loop.index==4 or loop.index==5 or loop.index==6 and col|float > 0.0 %}
+                            {% if loop.index == 6 %}
+                                <div class="text-success font-weight-bold">{{ "%.2f"|format(col|float) }}%</div>
+                            {% else %}
+                                <div class="text-success font-weight-bold">{{ "%.2f"|format(col|float) }}</div>
+                            {% endif %}
+                        {% elif loop.index==4 or loop.index==5 or loop.index==6 and col|float < 0.0 %}
+                            {% if loop.index == 6 %}
+                                <div class="text-danger font-weight-bold">{{ "%.2f"|format(col|float) }}%</div>
+                            {% else %}
+                                <div class="text-danger font-weight-bold">{{ "%.2f"|format(col|float) }}</div>
+                            {% endif %}
+                        {% elif loop.index==2 %}
+                            <div class="font-weight-bold">{{ col }}</div>
+                        {% else %}
+                            {{ col }}
+                        {% endif %}
+                    </td>
+                {% endif %}
             {% endfor %}
-
         </tr>
     {% endfor %}
     </tbody>
