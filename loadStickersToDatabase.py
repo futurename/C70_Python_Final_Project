@@ -1,4 +1,5 @@
 from csv import reader
+
 import database
 
 CSV_PATH = "data_source/nasdaq.csv"

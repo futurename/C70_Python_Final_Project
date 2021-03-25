@@ -1,8 +1,9 @@
 from flask import Flask, redirect, url_for, render_template, request
 from datetime import timedelta
-import database
-from loadStickersToDatabase import get_header
 import json
+
+from loadStickersToDatabase import get_header
+import database
 
 app = Flask(__name__, template_folder="flask_template")
 

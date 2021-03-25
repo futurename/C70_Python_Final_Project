@@ -1,5 +1,6 @@
 import sqlite3
-from loadStickersToDatabase import TICKERS_TABLE
+
+import loadStickersToDatabase
 
 SQLITE_PATH = "data_source/database.db"
 
@@ -16,15 +17,16 @@ def close_db():
 
 
 def drop_table():
-    sql_str = "DROP TABLE IF EXISTS " + TICKERS_TABLE
+    sql_str = "DROP TABLE IF EXISTS " + loadStickersToDatabase.TICKERS_TABLE
     DB_CONN.execute(sql_str)
 
 
 def create_table(header_cols):
     # Generate sql string for create table
-    sql_str = "CREATE TABLE " + TICKERS_TABLE
+    sql_str = "CREATE TABLE " + loadStickersToDatabase.TICKERS_TABLE
     sql_str += " (Id INTEGER PRIMARY KEY AUTOINCREMENT,"
     DB_CONN.execute(sql_str + header_cols + ")")
+    print(">>>> table created <<<<")
 
 
 def insert_row(row_str):
@@ -36,14 +38,14 @@ def insert_row(row_str):
 def get_symbols(fromTicker="", number=20):
     fromId = 1
     if not fromTicker == "":
-        sql_str = "SELECT Id FROM " + TICKERS_TABLE + " WHERE Symbol='" + fromTicker + "'"
+        sql_str = "SELECT Id FROM " + loadStickersToDatabase.TICKERS_TABLE + " WHERE Symbol='" + fromTicker + "'"
         cursor = DB_CONN.cursor()
         cursor.execute(sql_str)
         records = cursor.fetchall()
         fromId = records[0][0] + 1
     toId = fromId + number - 1
 
-    sql_str = "SELECT * FROM " + TICKERS_TABLE + " WHERE Id BETWEEN " + str(fromId) + " AND " + str(toId)
+    sql_str = "SELECT * FROM " + loadStickersToDatabase.TICKERS_TABLE + " WHERE Id BETWEEN " + str(fromId) + " AND " + str(toId)
     cursor = DB_CONN.cursor()
     cursor.execute(sql_str)
     return cursor.fetchall()
