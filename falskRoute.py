@@ -1,6 +1,7 @@
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request
 from datetime import timedelta
 import database
+from loadStickersToDatabase import get_header
 import json
 
 app = Flask(__name__, template_folder="flask_template")
@@ -10,13 +11,8 @@ app = Flask(__name__, template_folder="flask_template")
 def home():
     database.get_db()
     records = database.get_symbols()
-    print(type(records))
-    return render_template("home.html", records=records)
-
-
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
+    header = get_header()
+    return render_template("home.html", header=header, records=records)
 
 
 if __name__ == "__main__":

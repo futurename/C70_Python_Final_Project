@@ -33,7 +33,7 @@ def insert_row(row_str):
     DB_CONN.commit()
 
 
-def get_symbols(fromTicker="", number=30):
+def get_symbols(fromTicker="", number=20):
     fromId = 1
     if not fromTicker == "":
         sql_str = "SELECT Id FROM " + TICKERS_TABLE + " WHERE Symbol='" + fromTicker + "'"
