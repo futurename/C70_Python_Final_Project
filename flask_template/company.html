@@ -12,9 +12,9 @@
     <meta charset="UTF-8">
 
 </head>
-<body class="col-8 mx-auto font-weight-bold container-fluid">
+<body class="font-weight-bold container w-100">
 {% for html_body in result %}
-    <div class="h-100 w-100">{{ html_body|safe }}</div>
+    <div class="my-2 bg-info">{{ html_body|safe }}</div>
 {% endfor %}
 </body>
 </html>
