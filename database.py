@@ -6,6 +6,8 @@ SQLITE_PATH = "data_source/database.db"
 
 DB_CONN = sqlite3.connect(SQLITE_PATH, check_same_thread=False)
 
+PAGE_SYMBOLS = 20
+
 
 def get_db():
     return DB_CONN
@@ -35,17 +37,27 @@ def insert_row(row_str):
     DB_CONN.commit()
 
 
-def get_symbols(fromTicker="", number=20):
-    fromId = 1
+def get_symbols(fromId=1, fromTicker=""):
     if not fromTicker == "":
         sql_str = "SELECT Id FROM " + loadStickersToDatabase.TICKERS_TABLE + " WHERE Symbol='" + fromTicker + "'"
         cursor = DB_CONN.cursor()
         cursor.execute(sql_str)
         records = cursor.fetchall()
         fromId = records[0][0] + 1
-    toId = fromId + number - 1
+
+    toId = fromId + PAGE_SYMBOLS - 1
 
     sql_str = "SELECT * FROM " + loadStickersToDatabase.TICKERS_TABLE + " WHERE Id BETWEEN " + str(fromId) + " AND " + str(toId)
     cursor = DB_CONN.cursor()
     cursor.execute(sql_str)
     return cursor.fetchall()
+
+
+def search_symbols(search_string):
+    if search_string == "":
+        return ""
+    else:
+        sql_str = "SELECT * FROM " + loadStickersToDatabase.TICKERS_TABLE + " WHERE Symbol LIKE '%" + search_string + "%'"
+        cursor = DB_CONN.cursor()
+        cursor.execute(sql_str)
+        return cursor.fetchall()

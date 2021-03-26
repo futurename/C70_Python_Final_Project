@@ -12,22 +12,39 @@
 </head>
 <body class="container my-2">
 
-<div class="form-outline input-group col-8 mx-auto w-100">
-    <form class="form-inline my-2 w-100 justify-content-center">
-        <input class="form-control col-6" type="search" placeholder="Search" aria-label="Search">
+<div class="form-outline input-group col-10 mx-auto d-block">
+    <form class="form-inline my-2 justify-content-center" method="POST" action="/search">
+        <input class="form-control col-6" type="search" placeholder="Search" aria-label="Search" name="search">
         <button class="btn btn-primary my-2 mx-2" type="submit">Search</button>
     </form>
 </div>
 
+<div class="d-block w-100">
+    <div class="btn-group d-inline" role="group">
+        <button type="button" class="btn btn-primary mx-2" id="btn_prev"
+                onclick="location.href='http://localhost:5000/prev_page/{{ index }}'">
+            Prev
+        </button>
+        <button type="button" class="btn btn-primary mx-2" id="btn_next"
+                onclick="location.href='http://localhost:5000/next_page/{{ index }}'">
+            Next
+        </button>
+    </div>
 
-<table id="tickersDiv" class="mx-auto table table-hover my-4 container">
+    <div class="mx-auto d-inline float-right">
+        <button class="btn btn-primary" onclick="location.href='http://localhost:5000/statistics'">Statistics</button>
+    </div>
+
+</div>
+
+<table id="tickersDiv" class="table table-hover my-4 container">
     <thead>
     <tr class="text-center bg-info text-white font-weight-bolder">
         {% for col in header %}
             {% if loop.index==3 or loop.index==10 %}
-                <th  class="text-center col-2">{{ col }}</th>
+                <th class="text-center col-2">{{ col }}</th>
             {% else %}
-                <th  class="text-center">{{ col }}</th>
+                <th class="text-center">{{ col }}</th>
             {% endif %}
         {% endfor %}
     </tr>
